@@ -63,7 +63,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func showError(_ message: String) {
         let alert = NSAlert()
-        alert.messageText = "MikuTools"
+        alert.messageText = "Miku Monitor"
         alert.informativeText = message
         alert.alertStyle = .warning
         NSApp.activate(ignoringOtherApps: true)

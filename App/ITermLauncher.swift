@@ -34,7 +34,7 @@ enum ITermLauncher {
         script.executeAndReturnError(&error)
         if let error {
             let message = error[NSAppleScript.errorMessage] as? String ?? error.description
-            showError("无法打开 iTerm2：\(message)\n\n若未授权，请在系统设置 → 隐私与安全性 → 自动化中允许 MikuTools 控制 iTerm2。")
+            showError("无法打开 iTerm2：\(message)\n\n若未授权，请在系统设置 → 隐私与安全性 → 自动化中允许 Miku Monitor 控制 iTerm2。")
         }
     }
 
@@ -52,7 +52,7 @@ enum ITermLauncher {
 
     private static func showError(_ message: String) {
         let alert = NSAlert()
-        alert.messageText = "MikuTools"
+        alert.messageText = "Miku Monitor"
         alert.informativeText = message
         alert.alertStyle = .warning
         NSApp.activate(ignoringOtherApps: true)

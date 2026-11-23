@@ -3,17 +3,18 @@ import Foundation
 struct MonitorSnapshot: Codable, Equatable {
     let date: Date
     let cpu: Double?
+    let cpuTemperature: Double?
     let memory: Double?
     let disk: Double?
     let download: Double?
     let upload: Double?
 
     static var placeholder: MonitorSnapshot {
-        MonitorSnapshot(date: Date(), cpu: 0.12, memory: 0.63, disk: 0.71,
+        MonitorSnapshot(date: Date(), cpu: 0.12, cpuTemperature: 47, memory: 0.63, disk: 0.71,
                         download: 32_600_000, upload: 4_210_000)
     }
 
-    static let unavailable = MonitorSnapshot(date: .distantPast, cpu: nil, memory: nil,
+    static let unavailable = MonitorSnapshot(date: .distantPast, cpu: nil, cpuTemperature: nil, memory: nil,
                                               disk: nil, download: nil, upload: nil)
 
     static func formattedRate(_ bytesPerSecond: Double?) -> String {
@@ -43,7 +44,7 @@ enum SharedMonitorStore {
 
     static func save(_ snapshot: MonitorSnapshot) {
         guard let data = try? PropertyListEncoder().encode(snapshot) else { return }
-        // One value keeps the timestamp and all five metrics consistent across processes.
+        // One value keeps the timestamp and metrics consistent across processes.
         defaults?.set(data, forKey: snapshotKey)
     }
 

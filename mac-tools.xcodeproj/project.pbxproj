@@ -155,7 +155,7 @@
 			"productType" = "com.apple.product-type.application";
 			"productReference" = "8BCD5BC4CDFDF0918087C782";
 			"buildConfigurationList" = "A296CF4B7E708AB4E80076A9";
-			"productName" = "MikuTools";
+			"productName" = "Miku Monitor";
 			"isa" = "PBXNativeTarget";
 			"buildPhases" = ("971ED9D05B25DB6C4D7680D4", "78AE8C6BEB2A40A6D824CCEE", "364863F9F2E558B0F50473FC", "CC531F55156D1B4CD472E876",);
 			"dependencies" = ("2FB32516A54A4E8721B5EDC9", "4DA75641BEA61A776F463463",);
@@ -200,6 +200,16 @@
 			"lastKnownFileType" = "sourcecode.swift";
 			"sourceTree" = "<group>";
 		};
+		"67EE9CBF501648928D66EA48" = {
+			"path" = "CPUTemperatureReader.swift";
+			"isa" = "PBXFileReference";
+			"lastKnownFileType" = "sourcecode.swift";
+			"sourceTree" = "<group>";
+		};
+		"A6FAE1F85C0E438F92960324" = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "67EE9CBF501648928D66EA48";
+		};
 		"F231F6FE549E641636571AA6" = {
 			"path" = "WidgetExtension.appex";
 			"isa" = "PBXFileReference";
@@ -215,7 +225,7 @@
 		"971ED9D05B25DB6C4D7680D4" = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("DBF9600220663EB3C94D908C", "404348FF0C6537269804DD84", "FE88D2BDBB4A0EE017119154", "96EA85D7BBD308253CBFDD83", "1E86D0CF653EDE07B268F14C", "9A289725CAC8D04556CC2886", "BC2C916EECB9D015D9BB8232", "3FE9E58402F864E08EC9EEA9",);
+			"files" = ("DBF9600220663EB3C94D908C", "404348FF0C6537269804DD84", "FE88D2BDBB4A0EE017119154", "96EA85D7BBD308253CBFDD83", "1E86D0CF653EDE07B268F14C", "9A289725CAC8D04556CC2886", "BC2C916EECB9D015D9BB8232", "3FE9E58402F864E08EC9EEA9", "A6FAE1F85C0E438F92960324",);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		"21B12CA184ED22B33BAD04F1" = {
@@ -249,7 +259,7 @@
 				"ENABLE_APP_SANDBOX" = "NO";
 				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/../Frameworks";
 				"MACOSX_DEPLOYMENT_TARGET" = "14.0";
-				"PRODUCT_NAME" = "MikuTools";
+				"PRODUCT_NAME" = "Miku Monitor";
 			};
 			"name" = "Release";
 		};
@@ -267,7 +277,7 @@
 			"fileRef" = "6E72216CB5D7CE8285B64383";
 		};
 		"8BCD5BC4CDFDF0918087C782" = {
-			"path" = "MikuTools.app";
+			"path" = "Miku Monitor.app";
 			"isa" = "PBXFileReference";
 			"explicitFileType" = "wrapper.application";
 			"sourceTree" = "BUILT_PRODUCTS_DIR";
@@ -417,7 +427,7 @@
 				"ENABLE_APP_SANDBOX" = "NO";
 				"LD_RUNPATH_SEARCH_PATHS" = "$(inherited) @executable_path/../Frameworks";
 				"MACOSX_DEPLOYMENT_TARGET" = "14.0";
-				"PRODUCT_NAME" = "MikuTools";
+				"PRODUCT_NAME" = "Miku Monitor";
 			};
 			"name" = "Debug";
 		};
@@ -463,7 +473,7 @@
 		"C44A64D3FD7C19C3F86D35F8" = {
 			"path" = "SystemMonitor";
 			"isa" = "PBXGroup";
-			"children" = ("7EFEB6F8E2582C78EF6C0326", "8C16223445A2913BB8DD7E26", "A18E78572EEC33E419897401", "2F3D35CF23A983C94B7006CB", "EC70A856BE71DF9161BDF0A8", "3F830B109C87B9D4BB9ECDE0", "F932129E59CAA6139158C46D",);
+			"children" = ("7EFEB6F8E2582C78EF6C0326", "8C16223445A2913BB8DD7E26", "A18E78572EEC33E419897401", "2F3D35CF23A983C94B7006CB", "EC70A856BE71DF9161BDF0A8", "3F830B109C87B9D4BB9ECDE0", "F932129E59CAA6139158C46D", "67EE9CBF501648928D66EA48",);
 			"sourceTree" = "<group>";
 		};
 		"41D6AE4EA0901D12D313519A" = {

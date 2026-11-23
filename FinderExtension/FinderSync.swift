@@ -138,7 +138,7 @@ final class FinderSync: FIFinderSync {
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = false
         NSWorkspace.shared.open([request], withApplicationAt: appURL, configuration: configuration) { _, error in
-            if let error { self.showError("无法将打开请求交给 MikuTools", error: error) }
+            if let error { self.showError("无法将打开请求交给 Miku Monitor", error: error) }
         }
     }
 

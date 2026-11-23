@@ -4,9 +4,12 @@ import WidgetKit
 final class SystemMonitor {
     private let queue = DispatchQueue(label: "MikuTools.monitor", qos: .utility)
     private let cpuReader = CPUReader()
+    private lazy var cpuTemperatureReader = CPUTemperatureReader()
     private let networkReader = NetworkReader()
     private var timer: DispatchSourceTimer?
     private var activity: NSObjectProtocol?
+    private var cpuTemperature: Double?
+    private var lastCPUTemperatureRead: TimeInterval = -.infinity
     private var disk: Double?
     private var lastDiskRead: TimeInterval = -.infinity
     private var ticks = 0
@@ -48,12 +51,17 @@ final class SystemMonitor {
         let memory = MemoryReader.read()
         let rates = networkReader.read()
         let now = ProcessInfo.processInfo.systemUptime
+        if now - lastCPUTemperatureRead >= 5 {
+            cpuTemperature = cpuTemperatureReader?.read()
+            lastCPUTemperatureRead = now
+        }
         if now - lastDiskRead >= 15 {
             disk = DiskReader.read()
             lastDiskRead = now
         }
-        SharedMonitorStore.save(MonitorSnapshot(date: Date(), cpu: cpu, memory: memory, disk: disk,
-                                              download: rates?.download, upload: rates?.upload))
+        SharedMonitorStore.save(MonitorSnapshot(date: Date(), cpu: cpu, cpuTemperature: cpuTemperature,
+                                              memory: memory, disk: disk, download: rates?.download,
+                                              upload: rates?.upload))
         // The same serial timer writes the latest sample before requesting a reload.
         // Calls are requests only; WidgetKit can throttle their actual rendering.
         if ticks % 2 == 0 {

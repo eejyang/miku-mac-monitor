@@ -6,12 +6,16 @@ struct MonitorView: View {
     let monitor: MonitorSnapshot
 
     private var compact: Bool { family == .systemSmall }
+    private var cpuTemperatureLabel: String? {
+        guard let celsius = monitor.cpuTemperature, celsius.isFinite else { return nil }
+        return String(format: "%.0f°C", celsius)
+    }
 
     var body: some View {
         VStack(spacing: compact ? 12 : 0) {
             if compact {
                 HStack(spacing: 0) {
-                    gauge(value: monitor.cpu, label: "CPU")
+                    gauge(value: monitor.cpu, label: "CPU", detail: cpuTemperatureLabel)
                     gauge(value: monitor.memory, label: "RAM")
                 }
                 .frame(maxHeight: .infinity)
@@ -22,7 +26,7 @@ struct MonitorView: View {
                 .frame(maxHeight: .infinity)
             } else {
                 HStack(alignment: .bottom, spacing: 0) {
-                    gauge(value: monitor.cpu, label: "CPU")
+                    gauge(value: monitor.cpu, label: "CPU", detail: cpuTemperatureLabel)
                     gauge(value: monitor.memory, label: "RAM")
                     gauge(value: monitor.disk, label: "DISK")
                     network
@@ -49,13 +53,15 @@ struct MonitorView: View {
         .frame(maxWidth: .infinity)
     }
 
-    private func gauge(value: Double?, label title: String) -> some View {
-        VStack(spacing: compact ? 6 : 8) {
+    private func gauge(value: Double?, label title: String, detail: String? = nil) -> some View {
+        let percentage = value.map { "\(Int(($0 * 100).rounded()))%" }
+        let accessibilityValue = [percentage, detail].compactMap { $0 }.joined(separator: ", ")
+        return VStack(spacing: compact ? 6 : 8) {
             ZStack(alignment: .bottom) {
                 Arc().stroke(Color(white: 0.42), style: StrokeStyle(lineWidth: compact ? 4 : 5, lineCap: .round))
                 Arc().trim(from: 0, to: min(1, max(0, value ?? 0)))
                     .stroke(.white, style: StrokeStyle(lineWidth: compact ? 4 : 5, lineCap: .round))
-                Text(value.map { "\(Int(($0 * 100).rounded()))%" } ?? "--")
+                Text(percentage ?? "--")
                     .font(.system(size: compact ? 14 : 18, weight: .medium))
                     .monospacedDigit()
                     .contentTransition(.numericText(value: (value ?? 0) * 100))
@@ -63,12 +69,13 @@ struct MonitorView: View {
                     .offset(y: 2)
             }
             .frame(width: compact ? 48 : 70, height: compact ? 28 : 40)
-            label(title)
+            label(detail.map { "\(title) · \($0)" } ?? title)
+                .lineLimit(1)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(title)
-        .accessibilityValue(value.map { "\(Int(($0 * 100).rounded()))%" } ?? "暂无数据")
+        .accessibilityValue(accessibilityValue.isEmpty ? "暂无数据" : accessibilityValue)
     }
 
     private func rate(_ arrow: String, value: Double?, title: String) -> some View {
